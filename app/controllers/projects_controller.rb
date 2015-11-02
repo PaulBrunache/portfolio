@@ -28,7 +28,6 @@ class ProjectsController < ApplicationController
   end
 
   def update
-    check_syntax(@project, project_params)
     if @project.update(project_params)
       flash[:success] = 'Project was successfully updated.'
       redirect_to @project
@@ -50,10 +49,10 @@ class ProjectsController < ApplicationController
     end
 
     def check_syntax(project, params)
-      Project.validate_and_compile(project, params)
+      project.validate_and_compile(project, params)
     end
 
     def project_params
-      params.require(:project).permit(:name, :slim, :sass, :coffeescript, :compliled_html, :compiled_css, :compiled_js)
+      params.require(:project).permit(:name, :slim, :sass, :coffee, :compliled_html, :compiled_css, :compiled_js)
     end
 end

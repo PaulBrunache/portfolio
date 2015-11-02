@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20151031224116) do
     t.text     "slim"
     t.text     "sass"
     t.text     "coffee"
-    t.text     "compliled_html"
+    t.text     "compiled_html"
     t.text     "compiled_css"
     t.text     "compiled_js"
     t.datetime "created_at",     null: false

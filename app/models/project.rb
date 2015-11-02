@@ -1,26 +1,35 @@
 class Project < ActiveRecord::Base
   include CompileAssets
-  #validates_each :name, :slim, :sass, :coffeescript, presence: true
-  before_save :project_has_no_errors, only: [:create, :update]
-
-
-  def self.validate_and_compile(project, params)
-    html = compile_slim(project,params[:slim])
-    css = compile_sass(project,params[:sass])
-    #js = compile_coffee(coffee)
-    puts "\n\n#{css}\n\n"
-    puts "\n\n#{html}\n\n"
-    project.errors.full_messages.each do |e|
-      puts "\n\n#{e}\n\n"
+  validates :name,:slim,:coffee, presence: true
+  validate :project_has_no_errors
+  after_save :update_compiled_assets
+  # check for syntax errors
+  def validate_and_compile(project, params)
+    @html = compile_slim(project,params[:slim])
+    @css = compile_sass(project,params[:sass])
+    @js = compile_coffee(project,params[:coffee])
+    if @css && @js && @html
+      puts "\n\n#{@css}\n\n"
+      puts "\n\n#{@html}\n\n"
+      puts "\n\n#{@js}\n\n"
     end
     # allow save if there are no errors
     @save_project = project.errors.blank? ? true : false
+    puts "\n\nvalidate and compile method results: #{project.errors.full_messages}\n\n"
+    @project_errors = project.errors.full_messages
   end
 
-  def project_has_no_errors
-      puts "\nthe value of save is: #{Project.instance_variable_get(:@save_project)}\n"
-      value = Project.instance_variable_get(:@save_project)
-  end
-
-
+  private
+    def project_has_no_errors
+        if @save_project
+          @save_project
+        else
+          @project_errors.each do |msg|
+            errors.add(:base, msg)
+          end
+        end
+    end
+    def update_compiled_assets
+      update_columns(compliled_html: @html, compiled_css: @css, compiled_js: @js)
+    end
 end

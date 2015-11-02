@@ -5,7 +5,7 @@ class CreateProjects < ActiveRecord::Migration
       t.text :slim
       t.text :sass
       t.text :coffee
-      t.text :compliled_html
+      t.text :compiled_html
       t.text :compiled_css
       t.text :compiled_js
 
