@@ -1,0 +1,27 @@
+p#notice = notice
+
+
+= @project.slim
+p
+  strong Name:
+  = @project.name
+
+p
+  strong Sass:
+  = @project.sass
+p
+  strong Coffeescript:
+  = @project.coffee
+p
+  strong Compliled html:
+  = @project.compliled_html
+p
+  strong Compiled css:
+  = @project.compiled_css
+p
+  strong Compiled js:
+  = @project.compiled_js
+
+= link_to 'Edit', edit_project_path(@project)
+'|
+= link_to 'Back', projects_path

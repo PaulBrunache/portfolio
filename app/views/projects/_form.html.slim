@@ -1,0 +1,33 @@
+.container
+  .row
+    .col.s10.offset-s1
+      = form_for @project do |f|
+        - if @project.errors.any?
+          #error_explanation
+            h2 = "#{pluralize(@project.errors.count, "error")} prohibited this project from being saved:"
+            ul
+              - @project.errors.full_messages.each do |message|
+                li = message
+
+        .field
+          = f.label :name
+          = f.text_field :name
+        .field
+          = f.label :slim
+          = f.text_area :slim
+        .field
+          = f.label :sass
+          = f.text_area :sass
+        .field
+          = f.label :coffee
+          = f.text_area :coffee
+        .field
+          = f.label :compliled_html
+          = f.text_area :compliled_html
+        .field
+          = f.label :compiled_css
+          = f.text_area :compiled_css
+        .field
+          = f.label :compiled_js
+          = f.text_area :compiled_js
+        .actions = f.submit

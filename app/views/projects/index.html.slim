@@ -1,0 +1,33 @@
+h1 Listing projects
+
+table
+  thead
+    tr
+      th Name
+      th Slim
+      th Sass
+      th Coffeescript
+      th Compliled html
+      th Compiled css
+      th Compiled js
+      th
+      th
+      th
+
+  tbody
+    - @projects.each do |project|
+      tr
+        td = project.name
+        td = project.slim
+        td = project.sass
+        td = project.coffee
+        td = project.compliled_html
+        td = project.compiled_css
+        td = project.compiled_js
+        td = link_to 'Show', project
+        td = link_to 'Edit', edit_project_path(project)
+        td = link_to 'Destroy', project, data: {:confirm => 'Are you sure?'}, :method => :delete
+
+br
+
+= link_to 'New Project', new_project_path
